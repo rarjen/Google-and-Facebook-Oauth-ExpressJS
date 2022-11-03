@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User_history.init({
-    username: DataTypes.STRING,
+    email: DataTypes.STRING,
     score: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER
+    user_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User_history',

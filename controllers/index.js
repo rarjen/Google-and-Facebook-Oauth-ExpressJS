@@ -1,6 +1,6 @@
 const auth = require("./auth");
-// const user_bio = require("./user_bio");
-// const user_history = require("./user_history");
+const userBio = require("./userBio");
+const userHistory = require("./userhistory");
 
 module.exports = {
   exception: (err, req, res, next) => {
@@ -10,6 +10,6 @@ module.exports = {
     res.render("not-found");
   },
   auth,
-  // user_bio,
-  // user_history,
+  userBio,
+  userHistory,
 };

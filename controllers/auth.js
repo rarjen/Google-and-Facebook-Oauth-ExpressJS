@@ -50,7 +50,9 @@ module.exports = {
           token: token,
         },
       });
-      res.send("Berhasil Login");
+      // res.send(token);
+
+      // return res.redirect("home");
     } catch (error) {
       next(error);
     }
@@ -106,6 +108,7 @@ module.exports = {
       });
     } catch (error) {
       next(error);
+      // console.log(error);
     }
   },
   login: async (req, res, next) => {
@@ -177,7 +180,7 @@ module.exports = {
       } = req.body;
 
       const userExist = await User.findOne({
-        where: { email },
+        where: { email: email },
       });
 
       // if !ada -> simpan data user

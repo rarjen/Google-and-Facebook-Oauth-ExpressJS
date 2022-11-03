@@ -1,14 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../controllers/auth");
-// const user_history = require("../controllers/user_history");
-// const user_bio = require("../controllers/user_bio");
 const c = require("../controllers");
-// const mid = require("../helpers/middleware");
+const authorize = require("../middlewares/authorize");
+const restrict = require("../middlewares/restrict");
+// const Roles = require("../utils/roles");
+const multer = require("multer");
+const upload = multer();
 
 router.get("/", (req, res) => {
   res.render("home");
 });
+
+// Auth
 router.get("/auth/login", c.auth.google);
 router.get("/auth/login/facebook", c.auth.facebook);
 router.get("/auth/register", c.auth.registerPage); // menampilkan halaman registrasi
@@ -17,20 +20,56 @@ router.post("/auth/register", c.auth.register);
 router.get("/auth/login/basic", c.auth.loginPage); // menampilkan halaman login
 router.post("/auth/login/basic", c.auth.login);
 
-// Auth
-// router.post("/auth", auth.create);
-// router.post("/auth/login", auth.login);
+router.get("/createBio", authorize.authorize, restrict, c.userBio.createPage);
+router.post(
+  "/createBio",
+  authorize.authorize,
+  restrict,
+  upload.single("image"),
+  c.userBio.create
+);
+router.put(
+  "/createBio",
+  authorize.authorize,
+  restrict,
+  upload.single("image"),
+  c.userBio.update
+);
 
-// // User Bio
-// router.post("/add", mid.mustLogin, user_bio.create);
-// router.get("/index", user_bio.index);
-// router.get("/:id", user_bio.show);
-// router.put("/update", mid.mustLogin, user_bio.update);
-// router.delete("/:id", mid.mustLogin, user_bio.delete);
+// User History
+router.post(
+  "/createScore",
+  authorize.authorize,
+  restrict,
+  c.userHistory.createScore
+);
 
-// // // User History
-// router.post("/history", mid.mustLogin, user_history.create);
-// router.get("/history/index", user_history.index);
-// router.get("/history/:id", user_history.show);
+router.get(
+  "/createScore/:id",
+  authorize.authorize,
+  restrict,
+  c.userHistory.getScore
+);
+
+router.get(
+  "/createScore/",
+  authorize.authorize,
+  restrict,
+  c.userHistory.getAllScore
+);
+
+router.put(
+  "/createScore/",
+  authorize.authorize,
+  restrict,
+  c.userHistory.updateScore
+);
+
+router.delete(
+  "/deleteScore/:id",
+  authorize.authorize,
+  restrict,
+  c.userHistory.deleteScore
+);
 
 module.exports = router;
