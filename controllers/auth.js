@@ -227,6 +227,41 @@ module.exports = {
       next(error);
     }
   },
+  deleteUser: async (req, res, next) => {
+    try {
+      const user = req.user;
+      const { id } = req.params;
+
+      const exist = await User.findOne({ where: { id } });
+      if (!exist) {
+        return res.status(400).json({
+          status: false,
+          message: "User Not Found",
+          data: null,
+        });
+      }
+
+      const deleteUser = await User.destroy({
+        where: { id },
+      });
+
+      if (user.role != roles.admin) {
+        return res.status(401).json({
+          status: false,
+          message: "Not Authorized",
+          data: null,
+        });
+      }
+
+      return res.status(200).json({
+        status: true,
+        mesage: "Account Deleted",
+        data: deleteUser,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
   registerPage: (req, res) => {
     res.render("auth/register");
   },

@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const app = express();
-const passport = require("./utils/passport");
+// const passport = require("./utils/passport");
 const { HTTP_PORT } = process.env;
 
 app.use(express.json()); // untuk membaca body tipe json

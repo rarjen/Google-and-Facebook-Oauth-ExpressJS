@@ -16,6 +16,12 @@ router.get("/auth/login", c.auth.google);
 router.get("/auth/login/facebook", c.auth.facebook);
 router.get("/auth/register", c.auth.registerPage); // menampilkan halaman registrasi
 router.post("/auth/register", c.auth.register);
+router.delete(
+  "/auth/deleteUser/:id",
+  authorize.authorize,
+  restrict,
+  c.auth.deleteUser
+);
 
 router.get("/auth/login/basic", c.auth.loginPage); // menampilkan halaman login
 router.post("/auth/login/basic", c.auth.login);
@@ -72,4 +78,12 @@ router.delete(
   c.userHistory.deleteScore
 );
 
+// delete user only by admin
+
+router.delete(
+  "/auth/deleteUser/:id",
+  authorize.authorize,
+  restrict,
+  c.auth.deleteUser
+);
 module.exports = router;
