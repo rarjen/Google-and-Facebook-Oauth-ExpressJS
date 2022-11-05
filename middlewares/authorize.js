@@ -12,7 +12,6 @@ module.exports = {
 
     const payload = jwt.verify(token, JWT_SECRET_KEY);
     req.user = payload;
-
     next();
   },
 };

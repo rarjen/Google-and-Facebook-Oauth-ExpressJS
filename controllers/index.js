@@ -1,6 +1,7 @@
 const auth = require("./auth");
 const userBio = require("./userBio");
 const userHistory = require("./userhistory");
+const video = require("./video");
 
 module.exports = {
   exception: (err, req, res, next) => {
@@ -12,4 +13,5 @@ module.exports = {
   auth,
   userBio,
   userHistory,
+  video,
 };

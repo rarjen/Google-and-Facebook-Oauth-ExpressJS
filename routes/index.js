@@ -3,8 +3,10 @@ const router = express.Router();
 const c = require("../controllers");
 const authorize = require("../middlewares/authorize");
 const restrict = require("../middlewares/restrict");
-// const Roles = require("../utils/roles");
+const admin = require("../middlewares/admin");
+// const filter = require("../utils/multer");
 const multer = require("multer");
+const video = require("../controllers/video");
 const upload = multer();
 
 router.get("/", (req, res) => {
@@ -86,4 +88,41 @@ router.delete(
   restrict,
   c.auth.deleteUser
 );
+
+// Video
+router.post(
+  "/uploadVideo/",
+  authorize.authorize,
+  admin.authorize,
+  restrict,
+  upload.single("video"),
+  video.uploadVideo
+);
+
+router.put(
+  "/updateVideo/:id",
+  authorize.authorize,
+  admin.authorize,
+  restrict,
+  upload.single("video"),
+  video.updateVideo
+);
+
+router.delete(
+  "/deleteVideo/:id",
+  authorize.authorize,
+  admin.authorize,
+  restrict,
+  upload.single("video"),
+  video.deleteVideo
+);
+
+router.get(
+  "/getVideo",
+  authorize.authorize,
+  restrict,
+  upload.single("video"),
+  video.showVideo
+);
+
 module.exports = router;

@@ -153,6 +153,7 @@ module.exports = {
         name: userExist.name,
         email: userExist.email,
         user_type: userExist.user_type,
+        role: userExist.role,
       };
 
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
